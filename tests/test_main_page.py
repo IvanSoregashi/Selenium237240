@@ -1,5 +1,3 @@
-import time
-
 import pytest
 
 from pages.main_page import MainPage, By
@@ -33,4 +31,5 @@ class TestLoginFromMainPage:
         assert login_page.should_be_login_page()
 
     def test_guest_should_see_login_link(self, main_page):
+        main_page.open()
         assert main_page.should_be_login_link(), "Login link is not presented"
