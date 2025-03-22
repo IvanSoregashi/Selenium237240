@@ -7,10 +7,23 @@ from selenium.common.exceptions import NoSuchElementException, TimeoutException
 class BasePage:
     URL = ""
 
+    LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
+    FALSE_LOGIN_LINK = (By.CSS_SELECTOR, "#login_link_invalid")
+
     def __init__(self, browser: WebDriver, link=None):
         self.browser = browser
         self.URL = link or self.URL
-        self.browser.implicitly_wait(5)
+        #self.browser.implicitly_wait(5)
+
+    def go_to_login_page(self):
+        from pages.login_page import LoginPage
+        login_link = self.browser.find_element(*self.LOGIN_LINK)
+        login_link.click()
+        return LoginPage(self.browser)
+
+    def should_be_login_link(self):
+        return self.is_element_present(self.LOGIN_LINK)
+
 
     def open(self):
         self.browser.get(self.URL)
@@ -22,6 +35,13 @@ class BasePage:
             print(e)
             return False
 
+    def is_not_element_present(self, locator, timeout=4):
+        try:
+            WebDriverWait(self.browser, timeout).until(EC.presence_of_element_located(locator))
+        except TimeoutException:
+            return True
+        return False
+
     def is_disappeared(self, locator, timeout=4):
         try:
             WebDriverWait(self.browser, timeout, 1, TimeoutException). \
@@ -30,9 +50,4 @@ class BasePage:
             return False
         return True
 
-    def is_not_element_present(self, locator, timeout=4):
-        try:
-            WebDriverWait(self.browser, timeout).until(EC.presence_of_element_located(locator))
-        except TimeoutException:
-            return True
-        return False
+
