@@ -1,6 +1,6 @@
 import time
 
-from .base_page import BasePage, By
+from .base_page import BasePage, NotABasketMixin, By
 from .login_page import LoginPage
 
 class MainPage(BasePage):

@@ -9,6 +9,7 @@ class BasePage:
 
     LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
     FALSE_LOGIN_LINK = (By.CSS_SELECTOR, "#login_link_invalid")
+    USER_ICON = (By.CSS_SELECTOR, ".icon-user")
 
     def __init__(self, browser: WebDriver, link=None):
         self.browser = browser
@@ -50,4 +51,13 @@ class BasePage:
             return False
         return True
 
+    def should_be_authorized_user(self):
+        return self.is_element_present(self.USER_ICON), "User icon is not presented," \
+                                                                     " probably unauthorised user"
 
+
+class NotABasketMixin:
+    CART_BUTTON = (By.CSS_SELECTOR, "span.btn-group>a.btn.btn-default")
+
+    def to_the_cart_page(self):
+        self.browser.find_element(*self.CART_BUTTON).click()

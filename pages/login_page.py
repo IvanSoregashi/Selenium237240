@@ -21,3 +21,11 @@ class LoginPage(BasePage):
 
     def should_be_register_form(self):
         return self.is_element_present(self.REGISTER_FORM)
+
+    def register_new_user(self, email, password):
+        reg_form = self.browser.find_element(*self.REGISTER_FORM)
+        reg_form.find_element(By.ID, "id_registration-email").send_keys(email)
+        reg_form.find_element(By.ID, "id_registration-password1").send_keys(password)
+        reg_form.find_element(By.ID, "id_registration-password2").send_keys(password)
+        reg_form.find_element(By.CSS_SELECTOR, "button.btn.btn-lg.btn-primary").click()
+

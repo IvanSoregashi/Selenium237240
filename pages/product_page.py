@@ -1,8 +1,8 @@
-from .base_page import BasePage, By
+from .base_page import BasePage, NotABasketMixin, By
 import math
 from selenium.common.exceptions import NoAlertPresentException
 
-class ProductPage(BasePage):
+class ProductPage(BasePage, NotABasketMixin):
     URL = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-shellcoders-handbook_209/?promo=newYear"
     #URL = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=newYear2019"
 
